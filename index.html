@@ -1,57 +1,58 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>ApexDeck</title>
-  <style>
-    body {
-      background: #111;
-      color: #fff;
-      font-family: sans-serif;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      padding: 20px;
-    }
-    button {
-      padding: 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 12px;
-      background: #333;
-      color: white;
-      transition: 0.2s;
-    }
-    button:hover {
-      background: #555;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sim Racer Controls</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        button {
+            font-size: 20px;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
+    <div class="button-container">
+        <button onclick="sendKey('L')">Lights</button>
+        <button onclick="sendKey('F')">Flash Lights</button>
+        <button onclick="sendKey('C')">Camera Change</button>
+        <button onclick="sendKey('H')">Horn</button>
+    </div>
 
-<script>
-  const socket = new WebSocket("ws://192.168.1.11:8765");
+    <script>
+        const serverAddress = "ws://192.168.1.11:8080"; // Replace with your PC IP
+        const socket = new WebSocket(serverAddress);
 
-  socket.onopen = () => alert("✅ Connected to PC!");
-  socket.onerror = (e) => alert("❌ Connection failed to PC!");
+        socket.onopen = () => console.log("Connected to PC");
+        socket.onclose = () => console.log("Disconnected from PC");
 
-  function send(msg) {
-    socket.send(msg);
-  }
-</script>
-
-<button onclick="send('lights')">Lights (L)</button>
-<button onclick="send('flash')">Flash Lights (F)</button>
-<button onclick="send('camera')">Camera Change (C)</button>
-<button onclick="send('look_back')">Look Back (Q+W)</button>
-<button onclick="send('horn')">Horn (H)</button>
-<button onclick="send('driver_name')">Driver Name (Ctrl+L)</button>
-<button onclick="send('ideal_line')">Ideal Line (Ctrl+I)</button>
-<button onclick="send('save_replay')">Save Replay (Ctrl+Shift+S)</button>
-<button onclick="send('left_signal')">Left Turn (Alt+←)</button>
-<button onclick="send('right_signal')">Right Turn (Alt+→)</button>
-<button onclick="send('hazards')">Hazard Lights (Alt+↓)</button>
-<button onclick="send('pit_limiter')">Pit Limiter (Ctrl+P)</button>
-<button onclick="send('high_low')">High/Low Beam (Alt+L)</button>
-
+        function sendKey(key) {
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(key);
+            }
+        }
+    </script>
 </body>
 </html>
