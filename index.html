@@ -42,7 +42,8 @@
     </div>
 
     <script>
-        const serverAddress = "ws://192.168.1.11:8080"; // Replace with your PC IP
+        const serverAddress = "ws://192.168.1.11:8080"; // Your PC's IP address (No need to change here)
+
         const socket = new WebSocket(serverAddress);
 
         socket.onopen = () => console.log("Connected to PC");
