@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ApexDeck Stream</title>
+  <title>ApexDeck</title>
   <style>
     body {
       background: #111;
@@ -14,15 +14,15 @@
     }
     button {
       padding: 20px;
-      font-size: 18px;
+      font-size: 16px;
       border: none;
       border-radius: 12px;
-      background: #444;
+      background: #333;
       color: white;
       transition: 0.2s;
     }
     button:hover {
-      background: #666;
+      background: #555;
     }
   </style>
 </head>
@@ -31,14 +31,17 @@
 <script>
   const socket = new WebSocket("ws://192.168.1.11:8765");
 
+  socket.onopen = () => alert("✅ Connected to PC!");
+  socket.onerror = (e) => alert("❌ Connection failed to PC!");
+
   function send(msg) {
     socket.send(msg);
   }
 </script>
 
 <button onclick="send('lights')">Lights (L)</button>
-<button onclick="send('flash')">Flash (F)</button>
-<button onclick="send('camera')">Camera (C)</button>
+<button onclick="send('flash')">Flash Lights (F)</button>
+<button onclick="send('camera')">Camera Change (C)</button>
 <button onclick="send('look_back')">Look Back (Q+W)</button>
 <button onclick="send('horn')">Horn (H)</button>
 <button onclick="send('driver_name')">Driver Name (Ctrl+L)</button>
@@ -46,7 +49,7 @@
 <button onclick="send('save_replay')">Save Replay (Ctrl+Shift+S)</button>
 <button onclick="send('left_signal')">Left Turn (Alt+←)</button>
 <button onclick="send('right_signal')">Right Turn (Alt+→)</button>
-<button onclick="send('hazards')">Hazards (Alt+↓)</button>
+<button onclick="send('hazards')">Hazard Lights (Alt+↓)</button>
 <button onclick="send('pit_limiter')">Pit Limiter (Ctrl+P)</button>
 <button onclick="send('high_low')">High/Low Beam (Alt+L)</button>
 
